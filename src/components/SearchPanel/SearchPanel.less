@@ -1,0 +1,41 @@
+@import "../../site.less";
+
+.searchpanelcontrols {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: baseline;
+}
+
+.searchpaneltop {
+    .panel();
+    height: 65px;
+    width: 98.5%;
+    margin-left: 5px;
+    margin-top: 3px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+}
+
+
+#searchText {
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+.allContentLabel {
+    margin-top: 5px;
+    margin-right: 15px;
+}
+
+.allCheckBox {
+    color: black;
+}
+
+@media only screen and (max-width: 600px) {
+    .searchLabel {
+        display: none;
+    }
+
+}

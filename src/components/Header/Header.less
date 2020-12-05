@@ -1,0 +1,29 @@
+
+@import "../../site.less";
+
+.headerpanel {
+    .panel();
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: baseline;
+    height: 45px;
+    background-color: @header-background-color;
+}
+
+.headercontent {
+    margin: 10px 15px 10px 15px;
+    background-color: @header-background-color;
+    font-size: 24px;
+}
+
+.leftmenu {
+    height: 15px;
+    margin-left: 5px;
+    color: @menu-font-color;
+    background-color: @header-background-color;
+    font-family: Lucida, sans-serif;
+    position: relative;
+    z-index: 10;
+}

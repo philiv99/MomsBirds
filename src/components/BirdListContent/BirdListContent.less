@@ -1,0 +1,68 @@
+@import "../../site.less";
+
+
+.birdInfo {
+    font-size: 12px;
+    font-weight: bold;
+    overflow-y: auto;
+    height:88%;
+}
+
+.birdInfoTable {
+    width: 100%;
+}
+
+.birdInfoTable i {
+    color: @panel-Slider-Line-background;
+}
+
+.birdInfoTable>tbody>tr:nth-child(odd)  {
+    background-color: @odd-row-background-color;
+}
+
+.birdInfoTable>tbody>tr:nth-child(even)  {
+    background-color: @even-row-background-color;
+}
+
+.birdInfoContainer {
+    font-size: 16px;
+    text-align: center;
+    width: 100%;
+    color: black;
+}
+
+.birdInfoHeader {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.birdLocationDetails {
+    font-style: italic;
+    font-size: 11px;
+}
+
+.birdMomname {
+    float: left;
+}
+
+.birdlink {
+    font-size: 16px;
+    margin: 5px;
+}
+
+.birdlink>i {
+    color: @marker-color;
+}
+
+.birdSightingMMMDD {
+    font-size: 10px;
+    width: 60px;
+    text-align: left;
+}
+
+.birdHeaderIcons {
+    margin-top: 15px;
+}

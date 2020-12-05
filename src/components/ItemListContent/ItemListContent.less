@@ -1,0 +1,65 @@
+@import "../../site.less";
+
+
+.contentInfo {
+    font-size: 12px;
+    font-weight: bold;
+    overflow-y: auto;
+    height:88%;
+}
+
+.contentInfoTable {
+    width: 100%;
+    color: @panel-Slider-Line-background;
+}
+
+.contentInfoTable>tbody>tr:nth-child(odd)  {
+    background-color: @odd-row-background-color;
+}
+
+.contentInfoTable>tbody>tr:nth-child(even)  {
+    background-color: @even-row-background-color;
+}
+
+.contentInfoContainer {
+    font-size: 16px;
+    text-align: center;
+    width: 100%;
+    color: black;
+}
+
+.contentInfoHeader {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.contentLocationDetails {
+    font-style: italic;
+    font-size: 11px;
+}
+
+.contentName {
+    float: left;
+}
+
+.contentlink {
+    font-size: 16px;
+    margin: 5px;
+}
+
+.contentlink>i {
+    color: @marker-color;
+}
+
+.contentDataMMMDD {
+    font-size: 10px;
+    width: 60px;
+    text-align: left;
+}
+
+.contentHeaderIcons {
+    margin-top: 15px;
+}

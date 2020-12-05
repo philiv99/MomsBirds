@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	
+	<title>Mom's Birds</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico">
+
+	<script src="Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+    <script src="Scripts/InfoGoer/momsbirds.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin="">
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
+
+
+	
+<!-- <link id="avast_os_ext_custom_font" href="chrome-extension://eofcbnmajmjmplflapaojjnihcjkigck/common/ui/fonts/fonts.css" rel="stylesheet" type="text/css"></head> -->
+<body>
+
+
+
+<div id="mapid" 
+	 style="width: 1000px; height: 700px; position: relative;" 
+	 class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" 
+	 tabindex="0">
+	 <div class="leaflet-pane leaflet-map-pane" 
+		  style="transform: translate3d(0px, 0px, 0px);">
+		  <div class="leaflet-pane leaflet-tile-pane">
+			  <div class="leaflet-layer " style="z-index: 1; opacity: 1;">
+				<div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+
+	var maxyear = 0;
+	var minyear = 2001;
+	var selectedyear = 0;
+
+	var markersarray = [];
+	var markersbyyear = [];
+	var markeryears = [];
+	var maplat = 41.498935;
+	var maplng = -81.571083;
+	var startzoom = 2;
+	var mymap = L.map('mapid').setView([maplat, maplng], startzoom);
+	var key = 'pk.eyJ1IjoicGhpbGl2IiwiYSI6ImNqdDV6NjQyOTBicGszeWxqZzl1MmIwbmwifQ.5XxqiL5_KUeJruTboUvZPg';
+	
+	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		maxZoom: 18,
+		id: 'mapbox.streets',
+		accessToken: key
+	}).addTo(mymap);
+
+	var birdsTag = readXMLData("birdlist.xml");
+	$(birdsTag).find('bird').each(function () {
+		var momname = $(this).find('momname').text();
+		var url = $(this).find('url').text();
+		var imageurl = $(this).find('imageurl').text();
+		var thumburl = $(this).find('thumburl').text();
+		var sightingtag = $(this).find('sighting');
+		var locationtag = $(sightingtag).find('location');
+		var sightingdate = $(sightingtag).attr('date');
+		var sightingdatearray = sightingdate.split('/');
+		var location = $(locationtag).find('address').text();
+		var lat = $(locationtag).attr('lat');
+		var lng = $(locationtag).attr('lng');
+		var marker;
+
+		var tstr = "<div align='center'>" +
+					"<img src='" + thumburl + "' width='150'/><br/>" +
+					"<a href='" + url + "' target='_new'>" + momname + "</a><br/>" +
+					"</div>" +
+					"<bold>Where:</bold> " + location + "<br/>" +
+					"<bold>When:</bold> " + sightingdate + "<br/>";
+		marker = L.marker([lat, lng]).addTo(mymap);
+		marker.bindPopup(tstr); //.openPopup();
+		markersarray.push(marker);
+
+		var sightingyear = sightingdatearray[0];
+		var knownyear = $.inArray(sightingyear, markeryears)
+		if (knownyear == -1) {
+			markersbyyear[sightingyear] = [];
+			markeryears.push(sightingyear);
+		}
+		markersbyyear[sightingyear].push(marker);
+		if (sightingyear < minyear) { minyear = sightingyear; }
+		if (sightingyear > maxyear) { maxyear = sightingyear; }
+
+
+	});
+	//console.log('markersbyyear 1981: '+JSON.stringify(markersbyyear))
+	//mymap.fitBounds(markersbyyear[1981]);
+
+
+</script>
+
+
+
+
+
+</body></html>

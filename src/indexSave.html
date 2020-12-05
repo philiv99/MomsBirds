@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <script src="Scripts/InfoGoer/momsbirds.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+    <link href="Styles/MBSite.css" rel="stylesheet">
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+   
+    <script type="text/javascript">
+
+        var currentmap;
+        var infowindow;
+        var maxyear = 0;
+        var minyear = 2001;
+        var selectedyear = 0;
+
+        var markersarray = [];
+        var markersbyyear = [];
+        var markeryears = [];
+        var maplat = 41.498935;
+        var maplng = -81.571083;
+        var startzoom = 2;
+        var maxboundingzoom = 7;
+        var startpos;
+
+        $(document).ready(function () {
+
+            startpos = new google.maps.LatLng(maplat, maplng);
+            var mapoptions = {
+                zoom: startzoom,
+                mapTypeId: google.maps.MapTypeId.HYBRID,
+                center: startpos
+            };
+
+            //var currentmap = new google.maps.Map($('#theBirds').get(0), mapoptions);
+            currentmap = new google.maps.Map(document.getElementById('map-canvas'), mapoptions);
+
+            infowindow = new google.maps.InfoWindow();
+
+            //var birdiconurl = "./icons/heronicon.gif";
+            var birdiconurl = "./icons/icon-stork.gif";
+            var birdmarkerimage = new google.maps.MarkerImage(birdiconurl);
+            var marker;
+
+            var birdsTag = readXMLData("birdlist.xml");
+            $(birdsTag).find('bird').each(function () {
+
+                var momname = $(this).find('momname').text();
+                var url = $(this).find('url').text();
+                var imageurl = $(this).find('imageurl').text();
+                var thumburl = $(this).find('thumburl').text();
+
+                var sightingtag = $(this).find('sighting');
+                var locationtag = $(sightingtag).find('location');
+                var sightingdate = $(sightingtag).attr('date');
+                var sightingdatearray = sightingdate.split('/');
+                var location = $(locationtag).find('address').text();
+                var lat = $(locationtag).attr('lat');
+                var lng = $(locationtag).attr('lng');
+                //$('#thebirds').append('<br><a href="' + url + '">' + momname + '</a>').appendto('#page-wrap');
+                var markerPos = new google.maps.LatLng(lat, lng);
+                marker = new google.maps.Marker({
+                    position: markerPos,
+                    map: currentmap,
+                    //icon: birdmarkerimage,
+                    title: momname,
+                    visible: false
+                });
+                markersarray.push(marker);
+
+                var sightingyear = sightingdatearray[0];
+                var knownyear = $.inArray(sightingyear, markeryears)
+                if (knownyear == -1) {
+                    markersbyyear[sightingyear] = [];
+                    markeryears.push(sightingyear);
+                }
+                markersbyyear[sightingyear].push(marker);
+                if (sightingyear < minyear) { minyear = sightingyear; }
+                if (sightingyear > maxyear) { maxyear = sightingyear; }
+
+                google.maps.event.addListener(marker, 'click', (function (url, momname, thumburl, markerPos, location, sightingdate) {
+                    return function () {
+                        var tstr = "<div align='center'>" +
+                                   "<img src='" + thumburl + "' width='150'/><br/>" +
+                                   "<a href='" + url + "' target='_new'>" + momname + "</a><br/>" +
+                                   "</div>" +
+                                   "<bold>Where:</bold> " + location + "<br/>" +
+                                   "<bold>When:</bold> " + sightingdate + "<br/>";
+                        infowindow.setContent(tstr)
+                        infowindow.setPosition(markerPos);
+                        infowindow.open(currentmap);
+                    }
+                })(url, momname, thumburl, markerPos, location, sightingdate));
+            });
+
+            $("#birdcount2").html(markersarray.length);
+            markeryears.sort();
+            $("#lowestyear").html(markeryears[0]);
+            $("#highestyear").html(markeryears[markeryears.length - 1]);
+            showAllMarkers();
+            selectedyear = markeryears[0];
+
+            function showMarkers(year) {
+                $("#birdcount").val(markersbyyear[year].length);
+                $("#year").val(year);
+                for (i = 0; i < markersbyyear[year].length; i++) {
+                    var marker = markersbyyear[year][i];
+                    marker.setVisible(true);
+                }
+                positionZoom(markersbyyear[year]);
+                $('.ui-slider-handle').text(year).css({ width: 50, 'text-align': 'center' });
+            }
+
+            function showAllMarkers() {
+                for (y = 0; y < markersarray.length; y++) {
+                    markersarray[y].setVisible(true);
+                }
+                $("#birdcount").val(markersarray.length);
+                $("#year").val("ALL");
+                currentmap.setZoom(startzoom);
+            }
+
+            function hideAllMarkers() {
+                for (y = 0; y < markersarray.length; y++) {
+                    markersarray[y].setVisible(false);
+                }
+                currentmap.setZoom(startzoom);
+            }
+
+            function positionZoom(markerArray) {
+
+                var latlngbounds = new google.maps.LatLngBounds();
+                for (i = 0; i < markerArray.length; i++) {
+                    latlngbounds.extend(markerArray[i].getPosition());
+                };
+                currentmap.setCenter(latlngbounds.getCenter());
+                currentmap.fitBounds(latlngbounds);
+                var x = currentmap.getZoom();
+                if (currentmap.getZoom() > maxboundingzoom) {
+                    currentmap.setZoom(maxboundingzoom);
+                }
+            }
+
+            $("#showAll").click(function () {
+                if ($(this).is(':checked')) {
+                    showAllMarkers();
+                    $("#year").val("ALL");
+                    currentmap.setZoom(startzoom);
+                    currentmap.panTo(startpos);
+                    $("#yearpicker").slider("disable");
+                } else {
+                    $("#yearpicker").slider("enable");
+                    $("#year").val(selectedyear);
+                    hideAllMarkers();
+                    showMarkers(selectedyear);
+                };
+            });
+
+            $(function () {
+                $("#yearpicker").slider({
+                    value: 0,
+                    min: 0,
+                    max: markeryears.length - 1,
+                    step: 1,
+                    slide: function (event, ui) {
+                        hideAllMarkers();
+                        selectedyear = markeryears[ui.value];
+                        showMarkers(selectedyear);
+                    }
+                });
+            });
+
+        });
+
+
+        
+    </script>
+    </head>
+    <body>
+        <div class="header">
+            <div class="title" align="center">
+                Mom's Birds - Life List 
+            </div>
+            <div class="infogoerplug" align="center">brought to you by <a href="http://www.infogoer.com">InfoGoer.com</a></div>
+        </div>
+        We've entered <span id="birdcount2"></span> of approximately 700 birds so far
+        <br />  
+        <span>
+            <label for="showAll">Show All Years: </label><input type="checkbox" id="showAll" />
+            <label for="year">Year:</label><input type="text" id="year" size="4" style="border: 0;" />
+            <label for="birdcount">Count of Birds:</label><input type="text" size="4"  id="birdcount" style="border: 0;" />
+        </span>
+       
+        <div id="topleftstuff">
+            <div id="yearpicker" style="font-size:12px; text-decoration:  none"></div>
+            <div id="lowestyear" style="float: left"></div>
+            <div id="highestyear" style="float: right"></div>
+         </div>
+        <br />
+        <div id="map-canvas" />
+    </body>
+ </html>
