@@ -1,9 +1,9 @@
 
-var mapboxGLKey = 'pk.eyJ1IjoicGhpbGl2IiwiYSI6ImNqdDV6NjQyOTBicGszeWxqZzl1MmIwbmwifQ.5XxqiL5_KUeJruTboUvZPg';
-const witBirdInfoToken = 'DO75OI6LGECDZQAAWYXDCSRCJ5CMYMWK';
-const witBirdAppId = '1128625314178787';
-const witCommandToken = 'LDYV57ARY5DZ2SN6P4GEP3PIEH3RPYIM';
-const witCommandAppId = '868703177271364';
+var mapboxGLKey = 'xxxxxxxxxxxxxxxx';
+const witBirdInfoToken = 'xxxxxxxxxxxxxxx';
+const witBirdAppId = 'xxxxxxxxxxxxxxxx';
+const witCommandToken = 'xxxxxxxxxxxxxxxx';
+const witCommandAppId = 'xxxxxxxxxxxxxxx';
 const IGAPIURL =  'http://localhost:51202/api'
 
 export default { 
