@@ -5,3 +5,11 @@ This experimental website shows my mother's birding life list. You can navigate 
 This repo is not intended to be usable by the general public. It is made public here as a demonstration of one of my personal programming efforts to keep my technical skills up and to satisfy my interests in software development.
 
 The ultimate aim for this is to experiement with creating, training and implementing language models that can assist in entering the bird sighting information by voice commands. A preliminary private version of this uses https://wit.ai and other Mapbox APIs in this effort. If you look into the src/services folder you can find preliminary work in this area. When that functionality is fully implemented I'll add it to the live site.
+
+Some Implementation Notes:
+
+A simple API to provide bird data is implemented using Microsoft WebAPI .
+The UI is implemented using ReactJS/Redux/Underscore/Moment and a few other JS libraries.
+The UI uses Mapbox to implement the mapping features.
+Dev and deployment ops are implemented with npm (packages.json) and Webpack.
+
