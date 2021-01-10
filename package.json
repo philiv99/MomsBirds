@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dbrestoredevtoprod": "mysql -u BirdMan -p -hrose.arvixe.com exploreinfogoer < infogoer_backup_dev.sql",
-    "dbrestoredevtodev": "mysql -u BirdMan -p exploreinfogoer < infogoer_backup_dev.sql",
+    "dbrestoredevtodev": "mysql -u BirdMan -p < infogoer_backup_dev.sql",
     "dbbackupdev": "mysqldump --defaults-file=~/.local.my.cnf -hlocalhost exploreinfogoer > infogoer_backup_dev.sql",
     "dbbackupprod": "mysqldump --defaults-file=~/.my.cnf -hrose.arvixe.com exploreinfogoer > infogoer_backup_prod.sql",
     "runapi": "iisexpress /path:\"C:/Users/phili/Documents/My Web Sites/V1\"",
