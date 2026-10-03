@@ -1,0 +1,11 @@
+source: agentic
+revision: 058013af5d520d107993374592211fae10a726ee
+syncedUtc: 2026-09-28T13:34:05Z
+files:
+  - AGENTS.md
+  - .github\agents\plan.agent.md
+  - .github\agents\review.agent.md
+  - .github\skills\implement-change\SKILL.md
+  - .github\skills\plan-issue\SKILL.md
+  - .github\skills\review-release\SKILL.md
+  - .github\ISSUE_TEMPLATE\feature.md

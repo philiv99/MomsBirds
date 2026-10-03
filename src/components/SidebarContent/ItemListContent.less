@@ -1,0 +1,73 @@
+@import "../../site.less";
+
+
+.itemInfo {
+    font-size: 12px;
+    font-weight: bold;
+    overflow-y: auto;
+    height:88%;
+}
+
+.itemInfoTable {
+    width: 100%;
+}
+
+.itemInfoTable i {
+    color: @panel-Slider-Line-background;
+}
+
+.itemInfoTable>tbody>tr:nth-child(odd)  {
+    background-color: @odd-row-background-color;
+}
+
+.itemInfoTable>tbody>tr:nth-child(even)  {
+    background-color: @even-row-background-color;
+}
+
+.itemInfoContainer {
+    font-size: 16px;
+    text-align: center;
+    width: 100%;
+    color: black;
+}
+
+.itemInfoHeader {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.itemInfoHeaderText {
+    margin-top: 10px;
+    text-align: left;
+}
+
+.itemInfoHeaderIcons {
+    margin-top: 10px;
+}
+
+.itemLocationDetails {
+    font-style: italic;
+    font-size: 11px;
+}
+
+.itemMomname {
+    float: left;
+}
+
+.itemlink {
+    font-size: 16px;
+    margin: 5px;
+}
+
+.itemlink>i {
+    color: @marker-color;
+}
+
+.itemSightingMMMDD {
+    font-size: 10px;
+    width: 60px;
+    text-align: left;
+}

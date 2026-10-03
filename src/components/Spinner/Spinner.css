@@ -1,0 +1,79 @@
+
+#overlaydiv {
+    z-index:1000;
+    text-align: center;
+    display: table;
+    overflow: hidden;
+}
+
+#facebookpos {
+    margin: 0 auto;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+/*===========================================================
+ * Facebook Loader
+ * borrowed from
+*  http://blog.crazyegg.com/2012/05/08/loading-spinners-css3-animation/
+ * ========================================================*/
+ .facebook div{
+    height:10px;
+    width:5px;
+    display:inline-block;
+    background-color: #FFCC00;
+    border:1px solid black;
+    -webkit-animation:facebook_loader 1.3s linear infinite;
+    -moz-animation:facebook_loader 1.3s linear infinite;
+    animation:facebook_loader 1.3s linear infinite;
+    -webkit-transform:scale(0.91);
+    -moz-transform:scale(0.91);
+    transform:scale(0.91);
+}
+
+.facebook div:nth-child(1){
+    -webkit-animation-delay:0.39s;
+    -moz-animation-delay:0.39s;
+    animation-delay:0.39s;
+}
+.facebook div:nth-child(2){
+    -webkit-animation-delay:0.52s;
+    -moz-animation-delay:0.52s;
+    animation-delay:0.52s;
+}
+.facebook div:nth-child(3){
+    -webkit-animation-delay:0.65s;
+    -moz-animation-delay:0.65s;
+    animation-delay:0.65s;
+}
+
+@-webkit-keyframes facebook_loader{
+    0%{
+        -webkit-transform:scale(1.2);
+        opacity:1
+    }
+    100%{
+        -webkit-transform:scale(0.7);
+        opacity:0.1
+    }
+}
+@-moz-keyframes facebook_loader{
+    0%{
+        -moz-transform:scale(1.2);
+        opacity:1
+    }
+    100%{
+        -moz-transform:scale(0.7);
+        opacity:0.1
+    }
+}
+@keyframes facebook_loader{
+    0%{
+        transform:scale(1.2);
+        opacity:1
+    }
+    100%{
+        transform:scale(0.7);
+        opacity:0.1
+    }
+}

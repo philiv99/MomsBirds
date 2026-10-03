@@ -1,0 +1,32 @@
+name: spa-ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      # verify.ps1 is the single source of truth: install, test, and build.
+      # PowerShell Core (pwsh) is preinstalled on ubuntu-latest.
+      - name: Run verify.ps1
+        shell: pwsh
+        run: ./verify.ps1
+
+      - name: Upload dist artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: momsbirds-dist
+          path: dist/
+          if-no-files-found: error

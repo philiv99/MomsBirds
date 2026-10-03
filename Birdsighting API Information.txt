@@ -1,0 +1,156 @@
+backend API implementation for bird sighting data:
+
+model:
+
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace V1.Models
+{
+    public class BirdSighting
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int id { get; set; }
+        public string momname {get; set; }
+        public string propername {get; set; }
+        public string imageurl {get; set; }
+        public string thumburl {get; set; }
+        public string url {get; set; }
+        public DateTime sightingdate {get; set; }
+        public Double sightinglat {get; set; }
+        public Double sightinglng {get; set; }
+        public string description {get; set; }
+        public string address {get; set; }
+        public string type { get; set; }
+    }
+}
+
+Controller:
+
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Cors;
+using V1.Models;
+
+namespace V1.Controllers
+{
+    public class BirdSightingController : ApiController
+    {       
+        
+        private IBirdSightingRepository _birdSightings;
+
+        public BirdSightingController()
+        {
+            _birdSightings = new BirdSightingRepository(new APIDbContext());
+        }
+        
+        public BirdSightingController(IBirdSightingRepository BirdSightings)
+        {
+            _birdSightings = BirdSightings;
+        }
+
+        [HttpGet]
+        public IEnumerable<BirdSighting> Get()
+        {
+            return _birdSightings.GetAll();
+        }
+        
+        [HttpGet]
+        public BirdSighting GetById(int id)
+        {
+            return _birdSightings.Find(id);
+        }
+
+        public void throwErrorResponseException(HttpStatusCode HttpStatus, string Content, string ReasonPhrase)
+        {
+
+            var resp = new HttpResponseMessage(HttpStatus)
+            {
+                Content = new StringContent(Content),
+                ReasonPhrase = ReasonPhrase
+            };
+            throw new HttpResponseException(resp);
+        }
+
+        private void validateLattitude(Double lat)
+        {
+            if (lat < -90.0 || lat > 90.0)
+                throwErrorResponseException(HttpStatusCode.BadRequest, $"sightinglat = [{lat}]", "Invalid signtinglat");
+        }
+        private void validateLongitude(Double lng)
+        {
+            if (lng < -180.0 || lng > 180.0)
+                throwErrorResponseException(HttpStatusCode.BadRequest, $"sightinglng = [{lng}]", "Invalid signtinglng");
+        }
+
+        private void validateBirdSighting(BirdSighting birdSighting)
+        {
+            if (birdSighting == null)
+                throwErrorResponseException(HttpStatusCode.BadRequest, $"birdSighting is null", "Invalid birdSighting");
+            if (string.IsNullOrEmpty(birdSighting.momname))
+                throwErrorResponseException(HttpStatusCode.BadRequest, $"momname = [{birdSighting.momname}]", "Invalid momname");
+            if (string.IsNullOrEmpty(birdSighting.address))
+                throwErrorResponseException(HttpStatusCode.BadRequest, $"address is null or empty", "Invalid address");
+            if (birdSighting.sightingdate == null)
+                throwErrorResponseException(HttpStatusCode.BadRequest, $"sightingdate is null", "Invalid sightingdate");
+            validateLattitude(birdSighting.sightinglat);
+            validateLongitude(birdSighting.sightinglng);
+        }
+        
+        [HttpPost]
+        public int Create([FromBody] BirdSighting birdSighting)
+        {
+            validateBirdSighting(birdSighting);
+            int newId = _birdSightings.Add(birdSighting);
+            return newId;
+        }
+        
+        [HttpPut]
+        public int Update(int id, [FromBody] BirdSighting birdSighting)
+        {
+            if (birdSighting == null)
+            {
+                throwErrorResponseException(HttpStatusCode.BadRequest, $"birdSighting is null", "Invalid birdSighting");
+            }
+
+            var sighting = _birdSightings.Find(id);
+            if (sighting == null)
+            {
+                throwErrorResponseException(HttpStatusCode.NotFound, $"id is not found = [{id}]", "birdSighting not found");
+            }
+
+            sighting.momname = birdSighting.momname;
+            sighting.propername = birdSighting.propername;
+            sighting.imageurl = birdSighting.imageurl;
+            sighting.thumburl = birdSighting.thumburl;
+            sighting.url = birdSighting.url;
+            sighting.sightingdate = birdSighting.sightingdate;
+            sighting.sightinglat = birdSighting.sightinglat;
+            sighting.sightinglng = birdSighting.sightinglng;
+            sighting.description = birdSighting.description;
+            sighting.address = birdSighting.address;
+
+            _birdSightings.Update(sighting);
+
+            return sighting.id;
+        }
+        
+        [HttpDelete]
+        public int Delete(int id)
+        {
+            var sighting = _birdSightings.Find(id);
+            if (sighting == null)
+            {
+                throwErrorResponseException(HttpStatusCode.NotFound, $"id is not found = [{id}]", "birdSighting not found");
+            }
+
+            _birdSightings.Remove(id);
+            return id;
+        }
+    }
+}

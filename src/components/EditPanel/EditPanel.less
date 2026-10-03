@@ -1,0 +1,73 @@
+
+@import "../../site.less";
+
+
+.speakerpanel { 
+    .panel();
+    height: 50%;
+    position: absolute;
+    padding: 5px;
+    background: @panel-background-color;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px @menu-font-color;
+    opacity: 0.85;
+    z-index: 100;
+}
+
+
+.display-block {
+    display: block;
+}
+
+.display-none {
+    display: none;
+}
+
+.speaker-header {
+    height: 35px;
+    padding-top: 5px;
+    background: @panel-header-background;
+    font-size: 18px;
+    cursor: move;
+}
+
+.speaker-text {
+    margin-top: 5px;
+    margin-left: 50px; 
+    margin-right: 50px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.speaker-mic {
+    width: 50px;
+    float: left;
+    margin-top: 2px;
+    margin-left: 5px;
+    opacity: 1;
+    font-size: 24px;
+    color: rgb(23, 106, 12);
+    
+}
+
+.speaker-mic-off {
+    color: black;
+}
+
+.speaker-buttons {
+    width: 50px;
+    float: right;
+    button {
+        border: 0;
+        background:  @panel-header-background;
+        color: @menu-font-color; 
+        cursor: pointer;
+        font-size: 18px;
+    }
+}
+
+.speaker-content {
+    text-align: left;
+    margin-top: -18px;
+}

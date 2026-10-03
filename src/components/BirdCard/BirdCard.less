@@ -1,0 +1,67 @@
+//@import "../../site.less"
+
+.birdCardPanel {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+
+.birdCardForm {
+    >p {
+        font-size: 24px;
+    }
+    table tr td {
+        white-space: nowrap;
+        text-align: right;
+        font-weight: bold;
+        input {
+            width: 450px;
+        }
+    }
+    justify-content: center;
+    margin: 20px;
+    padding: 5px;
+    width: 600px
+}
+
+@media only screen and (max-width: 950px) {
+    .birdCardForm {
+        table tr td {
+            input {
+                width: 350px;
+            }
+        }
+        width: 500px;
+        margin: 20px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .birdCardForm {
+        table tr td {
+            input {
+                width: 175px;
+            }
+        }
+        width: 300px;
+        margin: 10px;
+    }
+}
+
+.birdCardAdd {
+    width: 5px;
+    margin: 5px;
+}
+
+.keep-format {
+    white-space: pre-wrap;
+}
+
+.data-container {
+    font-size: 12px;
+    font-weight: bold;
+    overflow-y: auto;
+    height:88%;
+    text-align: left;
+}
