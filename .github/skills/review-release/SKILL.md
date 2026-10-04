@@ -16,7 +16,9 @@ release record. Read-only — a person decides merges and approves deploys.
 3. Confirm **API compatibility**: routes, request/response shape, and CORS
    origins; any breaking change is backward compatible and the producer landed
    first.
-4. Confirm both **unit and integration** tests were added/updated and **pass**.
+4. Confirm both **unit and integration** tests were added/updated and **pass** —
+   the author ran the repo's `verify.ps1` green locally (there is no CI verify to
+   confirm it, so check the pull request records the verify result).
 5. Confirm configuration follows the stack model, production error detail is
    off, **no credentials** appear in the diff or committed config, and the pull
    request **links its issue** with `Closes #<n>`.

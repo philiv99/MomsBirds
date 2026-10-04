@@ -21,8 +21,10 @@ person decides merges. You report findings against the plan's acceptance checks.
    Flag any breaking change and whether the producer change is backward
    compatible and landed first.
 3. **Tests** — both **unit** and **integration** tests were added or updated per
-   the plan and the stack's test layout, and both suites pass. Missing or failing
-   tests block the pull request.
+   the plan and the stack's test layout, and both suites pass. The author must
+   have run the repo's `verify.ps1` **green locally** — CI does **not** run it —
+   so confirm the pull request records that result. Missing or failing tests block
+   the pull request.
 4. **Deployment configuration** — config follows the stack model (config-source
    connection strings, prod XDT transforms, dev/prod config module switching);
    detailed error output is off in production; deploy stays in the human-run
