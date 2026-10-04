@@ -1,11 +1,14 @@
 source: agentic
-revision: dadefe430b35b38a21e5b6486ac85b60ee46fdea
-syncedUtc: 2026-10-04T13:39:33Z
+revision: ad0ca12398df686e3a69949de18ba1ea96dbd066
+syncedUtc: 2026-10-04T14:58:12Z
 files:
   - AGENTS.md
   - .github\agents\plan.agent.md
   - .github\agents\review.agent.md
+  - .github\skills\create-issue\SKILL.md
   - .github\skills\implement-change\SKILL.md
   - .github\skills\plan-issue\SKILL.md
+  - .github\skills\prioritize-backlog\SKILL.md
+  - .github\skills\refine-issue\SKILL.md
   - .github\skills\review-release\SKILL.md
   - .github\ISSUE_TEMPLATE\feature.md

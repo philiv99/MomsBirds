@@ -26,26 +26,30 @@ tests in a single repo.
    - Integration: controller routes end-to-end against the test database, or
      connected components against a mocked API; assert status/shape (and a CORS
      preflight for the API).
-5. Run **all** test suites from `PROJECT.md`. Both unit and integration must
-   pass. Fix failures before finishing.
+5. Run the unit and integration suites from `PROJECT.md` while you work; fix
+   failures as you go.
 6. Keep secrets out of source — config comes from git-ignored settings/`.env`
    with a committed `*.example`.
 7. **Record the change in release notes.** Add an entry under an *Unreleased*
    heading in the repo's `CHANGELOG*.md` describing what shipped, and note the
    intended semantic version bump (`MAJOR.MINOR.PATCH`). Do **not** bump the
    version file(s) here — that happens at release (`review-release`).
-8. **Commit and push.** Make small, reviewable commits with imperative messages
+8. **Verify green (local gate).** Run the repo's `verify.ps1` and confirm it is
+   **green** — it installs, builds, and runs the unit + integration suites. This
+   must pass **before** you commit or push; CI does **not** run `verify.ps1`, so
+   this local run is the authoritative gate.
+9. **Commit and push.** Make small, reviewable commits with imperative messages
    that reference the issue (`#N`), then push the branch to the remote.
-9. **Open a pull request that links the issue.** Open a PR (via the GitHub MCP or
-   `gh`) from the branch to the default branch; title it for the outcome and
-   write a body that summarizes the change, lists the exact test commands and
-   their results, and includes `Closes #N` so the merge closes the issue. Open it
-   as a **draft** until the repo's checks are green, then mark it ready for
-   review. Do **not** merge, approve, or close the issue — a person merges, and
-   the merge closes the linked issue.
+10. **Open a pull request that links the issue.** Open a PR (via the GitHub MCP or
+    `gh`) from the branch to the default branch; title it for the outcome and
+    write a body that summarizes the change, lists the exact test commands and
+    their results, and includes `Closes #N` so the merge closes the issue. Do
+    **not** merge, approve, or close the issue — a person merges, and the merge
+    closes the linked issue.
 
 ## Output
 
 Report the issue addressed, the **branch name** and **pull-request URL**, the
-list of changed files, the CHANGELOG entry added, and the exact test commands run
-with their results. Request human review; do not merge or deploy.
+list of changed files, the CHANGELOG entry added, and the **`verify.ps1` result**
+(green) plus the exact test commands run. Request human review; do not merge or
+deploy.

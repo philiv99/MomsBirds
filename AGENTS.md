@@ -32,9 +32,12 @@ the refreshed copy here. The synced revision is recorded in `.agentic-version`.
    repo's **default branch**, named `<type>/<issue-number>-<slug>` (type =
    `feat`, `fix`, `chore`, or `docs`). Never commit the change directly to the
    default branch.
-7. **Commit and push.** Make small, reviewable commits with imperative messages
-   that reference the issue (`#<n>`); keep unrelated changes out. Push the branch
-   to the remote.
+7. **Verify locally, then commit and push.** First run the repo's `verify.ps1`
+   and get it **green** — it is the authoritative gate (install, build, and the
+   unit + integration suites). Only with a green verify do you commit (small,
+   reviewable commits with imperative messages that reference the issue `#<n>`;
+   keep unrelated changes out) and push the branch. **Never push a red or un-run
+   `verify.ps1`**, and note that CI does **not** run it (see rule 12).
 8. **Open a linked pull request; never merge it yourself.** Open a pull request
    (via the GitHub MCP or `gh`) from the branch to the default branch, with a
    clear title and a body that summarizes the change, lists the tests run, and
@@ -57,12 +60,14 @@ the refreshed copy here. The synced revision is recorded in `.agentic-version`.
 ## Finish
 
 11. **Summarize evidence**: the issue addressed, the **branch name** and
-    **pull-request URL**, files changed, and unit + integration test results
-    (commands run and their outcome).
-12. **Request human review before release.** CI builds each repo independently
-    and runs its suites; a **person** decides merges and merges the pull request,
-    which closes the linked issue. Deployment stays in the human-run scripts — do
-    not deploy from an agent or from CI.
+    **pull-request URL**, files changed, and the `verify.ps1` result (plus any
+    specific unit/integration commands run).
+12. **Request human review before release.** You already ran `verify.ps1` green
+    locally — that is the gate. **CI does not run `verify.ps1`** (a GitHub runner
+    lacks the credentials verify needs, so the CI verify workflow is disabled); a
+    **person** decides and performs the merge, which closes the linked issue.
+    Deployment stays in the human-run scripts — never deploy from an agent or from
+    CI.
 13. **Two environments only**: development (local) and production. There is no
     staging environment. Before a production release, verify the local SPA
     against the local API, then approve the production deploy separately and

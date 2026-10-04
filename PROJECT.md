@@ -34,6 +34,20 @@ These modules also carry **client-side** values (Mapbox token, wit.ai tokens). T
 public by design — a browser SPA compiles them into the bundle. Restrict them at the
 provider and rotate if leaked; they are **not** server secrets.
 
+## Versions & release notes
+
+The **Versions & Release Notes** view (opened from the left menu) shows the deployed
+version of each component and its release-note history:
+
+- The **SPA version** is compiled into the bundle from `package.json` by the webpack
+  `DefinePlugin` (`process.env.REACT_APP_VERSION`, set in `webpack.common.js`) — shown
+  with no network call.
+- The **API** and **database schema** versions and note history come from the live
+  `GET {API base}/Meta/version` endpoint via `src/services/versionsService.js`,
+  consuming the shared contract defined in `api.infogoer.com/PROJECT.md`.
+- If the endpoint is unreachable the modal **degrades gracefully** — it still shows the
+  SPA version and presents a clear error message with a retry button.
+
 ## Deploy (production)
 
 - Node `ftp-deploy` via `ftpdeploy.js` → host `ftp.infogoer.com`, remote
