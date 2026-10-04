@@ -20,8 +20,9 @@ not the implementation. -->
 
 ## Owning repo(s)
 
-<!-- Your best guess: MomsBirds, api.infogoer.com, or both. If both, say so —
-the plan will land the backward-compatible API/producer change first. -->
+<!-- Name the repo(s) you believe this change belongs to. If it spans repos, say
+so — the plan will split it and land the backward-compatible producer/API change
+first. -->
 
 ## Acceptance checks
 
@@ -43,6 +44,7 @@ say so — the contract is defined once. -->
 ## Release checklist (filled at ship time, not now)
 
 - [ ] `CHANGELOG*.md` entry added for what shipped.
-- [ ] Version bumped where it applies (`package.json` / `VERSION` /
-      `schema_version.sql`).
+- [ ] Version bumped where it applies — the version file(s) for this repo's stack
+      (see `PROJECT.md`; e.g. `package.json`, a `VERSION` file, or a
+      schema-version row).
 - [ ] Paired commit IDs and rollback choice recorded (`review-release`).

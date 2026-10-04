@@ -24,10 +24,11 @@ release record. Read-only — a person decides merges and approves deploys.
 6. Verify the pair locally first: the **local** SPA reads live data from the
    **local** API with the configured local CORS origin.
 7. **Finalize release notes and version.** Promote the `CHANGELOG*.md`
-   *Unreleased* entry to a dated, versioned heading, and bump the version where
-   it applies: `package.json` (SPA), `VERSION` (API), and — for a schema change —
-   add the row to `schema_version.sql` and `CHANGELOG.Database.md`. A release
-   without an updated changelog/version is a blocker.
+   *Unreleased* entry to a dated, versioned heading, and bump the version file(s)
+   for this repo's stack as recorded in `PROJECT.md` (for example `package.json`
+   for a web app, a `VERSION` file for an API, or a schema-version row and
+   database changelog for a schema change). A release without an updated
+   changelog/version is a blocker.
 8. Deploy each merged component to production by its own human-run script, then
    run the API smoke test and a browser check.
 9. **Record** the paired API and SPA commit IDs and the rollback choice in the
