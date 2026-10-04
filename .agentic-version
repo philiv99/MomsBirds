@@ -1,6 +1,8 @@
 source: agentic
-revision: ad0ca12398df686e3a69949de18ba1ea96dbd066
-syncedUtc: 2026-10-04T14:58:12Z
+version: 0.1.0
+tag: 0cb9027
+revision: 0cb90273ee967200c647b76e872cafbcb0474b14
+syncedUtc: 2026-10-04T16:32:33Z
 files:
   - AGENTS.md
   - .github\agents\plan.agent.md
