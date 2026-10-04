@@ -30,6 +30,10 @@ person decides merges. You report findings against the plan's acceptance checks.
 5. **Secret exposure** — no credentials in the diff or committed config; secrets
    come only from git-ignored settings/`.env` with a committed `*.example`. Flag
    any secret that appears in the diff or history for rotation at its source.
+6. **Issue linkage & merge discipline** — the pull request links its issue with
+   `Closes #<n>` so the merge closes it (for a cross-repo pair, each repo's pull
+   request closes its own issue). You do **not** merge, approve, or close
+   anything — a person merges, which closes the linked issue.
 
 ## Output
 

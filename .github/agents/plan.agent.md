@@ -30,6 +30,7 @@ Your output is a short, actionable plan a human or the editing agent can execute
 5. **Acceptance checks** — observable conditions that mean "done", including that
    both unit and integration suites pass.
 6. **Implementation sequence** — the smallest ordered steps to deliver the
-   change and its tests.
+   change and its tests, and the branch name to use
+   (`<type>/<issue-number>-<slug>`).
 
 Keep it concise. Do not write code; describe what to change and where.

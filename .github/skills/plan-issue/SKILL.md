@@ -27,7 +27,7 @@ Given issue #N, produce a short plan before any code is written.
 6. Define **acceptance checks** — observable "done" conditions, including that
    both unit and integration suites pass.
 7. State the **smallest deliverable** and a short ordered implementation
-   sequence.
+   sequence, including the branch name to use (`<type>/<issue-number>-<slug>`).
 
 ## Output
 
