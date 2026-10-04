@@ -1,32 +1,18 @@
 name: spa-ci
 
+# verify.ps1 is the LOCAL gate (see AGENTS.md): the agent runs it green before
+# pushing. CI does NOT run verify.ps1 — a GitHub runner lacks the git-ignored config
+# (src/devconfig.js, src/prodconfig.js) that verify needs, and a person decides the
+# merge. This workflow is kept as an intentionally inert, manual-dispatch-only
+# placeholder so the policy is explicit and it can be re-enabled if CI is ever
+# provisioned with those inputs.
+
 on:
-  pull_request:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 jobs:
-  verify:
+  noop:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-
-      # verify.ps1 is the single source of truth: install, test, and build.
-      # PowerShell Core (pwsh) is preinstalled on ubuntu-latest.
-      - name: Run verify.ps1
-        shell: pwsh
-        run: ./verify.ps1
-
-      - name: Upload dist artifact
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: momsbirds-dist
-          path: dist/
-          if-no-files-found: error
+      - name: CI does not run verify.ps1
+        run: echo "verify.ps1 is the local gate; CI does not run it. See AGENTS.md."
