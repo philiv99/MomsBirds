@@ -27,7 +27,7 @@ const Map = ({items}) => {
   // Pins owns all map movement (fit-to-bounds on data change, fly-to on click),
   // so the map only needs a static initial view here.
   return (<MapBoxMap id="mapDiv"
-    style= "mapbox://styles/mapbox/streets-v9"
+    style= "mapbox://styles/mapbox/outdoors-v12"
     center={initialCenter}
     zoom={initialZoom}
     containerStyle={{
